@@ -90,11 +90,55 @@ end
 ### Optional Questions
 
 1. Name your five favorite ActiveRecord methods (i.e. methods your models inherit from ActiveRecord) and describe what they do.
+.where (some attribute) => it returns an array on objects that match the specified given criteria
+.group( some attribute).count => returns a hash where the key is the attribute and the value is the count
+.find(:id) => returns the object related to that id
+.join(:some table) => creates a joined table saved in memory that you can further query
+.minimum and .maximum(some attribute) => returns the highest or lowest object
+
 2. Name your three favorite ActiveRecord rake tasks and describe what they do.
+rake db:drop - drops the database
+rake db:create - creates the datbase
+rake db: migrate - sets the migrations
+
 3. What two columns does `t.timestamps null: false` create in our database?
+created_at and updated_at
+
 4. In a database that's holding schools and teachers, what will be the relationship between schools and teachers?
+Many to many
+
 5. In the same database, what will you need to do to create this relationship (draw a schema diagram)?
+  I created a course table that would hold both the ids or the teachers and the students.
+
 6. Give an example of when you might want to store information besides ids on a join table.
+  in the case of the example above the name of the courses.
+
 7. Describe and diagram the relationship between patients and doctors.
+  many to many linked through appointments.
+
+  class Patient
+    has_many :appointments
+    has_many :doctors, through: :appointments
+  end
+
+  class Appointment
+    belongs_to :doctor
+    belongs_to :patient
+  end
+
+  class Doctor
+    has_many :appointments
+    has_many :patients, through: :appointments
+  end
+
 8. Describe and diagram the relationship between museums and original_paintings.
+  class Museum
+    has_many :original_paintings
+  end
+
+  class Original_painting
+    belongs_to :museum
+  end
+
 9. What could you see in your code that would make you think you might want to create a partial?
+  If you have views that have identical code you can cut it out and have it render partial
